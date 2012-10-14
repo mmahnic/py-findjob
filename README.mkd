@@ -1,0 +1,65 @@
+# Simple backups with python, find and zip
+
+findjob.py
+
+A bakckup system that incrementally adds files to ZIP archives. It uses
+external programs find and zip to do the work. The classes in findjob.py are
+used to prepare the parameters for the external programs and to run them.
+
+In the example below the files from the ~/Documents folder are archived. Some
+directories and files are excluded from archiving (skipDirs, skipFiles).
+
+Additional settings can be placed into .backupsettings files in the directories
+that are traversed by the jobs. ATM the only supported settings in these files
+are 'skipfiles=' and 'skipdirs=':
+
+    skipfiles=*.build:*.out:*.temp
+    skipdirs=tempdir:builddir
+
+The default archive manager settings are used. The archived files for each week
+are placed in
+
+    OUT_ROOT/<year>/w/documents<year>w<week><suffix>.zip
+
+and the monthly archives are created in
+    
+    OUT_ROOT/<year>/m/documents<year>m<month><suffix>.zip
+
+The code:
+
+    from findjob import FindJobBuilder, ArchiveFileManager, BackupModeSelector
+    import os
+
+    PROFILE="/home/user"
+
+    tmpdirs    = "*/xdata:*/xtemp:*/temp:*/Temp:*/tmp"
+    builddirs  = "*/BUILD:*/Build:*/build"
+    backupdirs = "*/.backup:*/.xbackup"
+
+    OUT_ROOT   = "/home/user/.backup"
+    skipdirs   = tmpdirs
+    inclfiles  = "*:.*"
+    exclfiles  = "*.stackdump"
+
+    MODE_SELECTOR = BackupModeSelector()
+
+    # Define a backup job
+    def backup_documents(arch):
+        global PROFILE, MODE_SELECTOR
+        global tmpdirs, builddirs, backupdirs
+
+        arch.configureBackup("documents", "w", incremental=True, selector=MODE_SELECTOR)
+
+        bdir = os.path.join(PROFILE, "Documents")
+        find = FindJobBuilder(bdir)
+        find.includeFiles("*:.*")
+        find.skipDirs([tmpdirs, builddirs, backupdirs])
+        find.skipFiles("*.obj:*.war:*.ncb:*.stackdump:*/bin/*.o")
+
+        arch.findAndZip(find)
+
+    arch = ArchiveFileManager(OUT_ROOT)
+    arch.runBackups([
+        backup_documents
+        # add more jobs
+        ])

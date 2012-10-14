@@ -18,7 +18,7 @@ are 'skipfiles=' and 'skipdirs=':
     skipfiles=*.build:*.out:*.temp
     skipdirs=tempdir:builddir
 
-The default archive manager settings are used. The archived files for each week
+With the default archive manager settings the archived files for each week
 are placed in
 
     OUT_ROOT/<year>/w/documents<year>w<week><suffix>.zip

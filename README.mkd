@@ -1,15 +1,17 @@
-# Simple backups with python, find and zip
+# Simple incremental backups with Python, find and zip
 
 findjob.py
 
-A bakckup system that incrementally adds files to ZIP archives. It uses
-external programs find and zip to do the work. The classes in findjob.py are
-used to prepare the parameters for the external programs and to run them.
+A module for backup systems that incrementally add files to ZIP archives.  The
+library uses external programs find and zip to do the work. The classes in
+findjob.py are used to prepare the parameters for the external programs and to
+run them.
 
-In the example below the files from the ~/Documents folder are archived. Some
+Backup parameters are defined in Python scripts that use the module. In the
+example below the files from the ~/Documents folder are archived. Some
 directories and files are excluded from archiving (skipDirs, skipFiles).
 
-Additional settings can be placed into .backupsettings files in the directories
+Additional settings can be placed in .backupsettings files in the directories
 that are traversed by the jobs. ATM the only supported settings in these files
 are 'skipfiles=' and 'skipdirs=':
 

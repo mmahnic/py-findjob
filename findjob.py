@@ -2,6 +2,7 @@
 # vim:set fileencoding=utf-8 sw=4 ts=8 et:vim
 # Author:  Marko Mahnič
 # Created: mar 2007 
+# License: GPL (http://www.gnu.org/copyleft/gpl.html)
 #
 # This classes were created for a bakckup system that incrementally adds
 # files to ZIP archives. It uses external programs find and zip to do

@@ -27,7 +27,7 @@ and the monthly archives are created in
     
     OUT_ROOT/<year>/m/documents<year>m<month><suffix>.zip
 
-The code:
+Here is an example backup script:
 
     from findjob import FindJobBuilder, ArchiveFileManager, BackupModeSelector
     import os
